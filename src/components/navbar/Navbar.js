@@ -4,7 +4,7 @@ import {StyleSheet,View,Text} from 'react-native'
 export const Navbar = ()=>{
     return (
         <View style={style.navbar}>
-            <Text style={style.text}>ToDo App</Text>
+            <Text style={style.text}>ToDo App!</Text>
         </View>
     )
 }
