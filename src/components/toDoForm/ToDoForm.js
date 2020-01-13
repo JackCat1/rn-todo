@@ -1,11 +1,20 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {StyleSheet,View,TextInput,Button} from 'react-native'
 
-export const ToDoForm = ()=>{
+export const ToDoForm = ({addToDo})=>{
+    const [value,onChangeText]=useState('')
+    const sendToDo = (title)=>{
+        addToDo(title)
+        onChangeText('')
+    }
     return (
         <View style={style.wrap}>
-            <TextInput style={style.input}/>
-            <Button title="Добавить"/>
+            <TextInput 
+                style={style.input}
+                onChangeText={onChangeText}
+                value={value}
+            />
+            <Button title="Добавить" onPress={()=>sendToDo(value)}/>
         </View>
     )
 }
