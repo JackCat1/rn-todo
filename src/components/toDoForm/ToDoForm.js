@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import {StyleSheet,View,TextInput,Button} from 'react-native'
+import { THEME } from '../../utils/Theme';
 
 export const ToDoForm = ({addToDo})=>{
     const [value,onChangeText]=useState('')
@@ -31,6 +32,6 @@ const style = StyleSheet.create({
         padding:10,
         borderStyle:'solid',
         borderBottomWidth:1,
-        borderBottomColor:'blue'
+        borderBottomColor:THEME.MAIN_COLOR
     }
 })

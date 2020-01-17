@@ -1,13 +1,14 @@
 import React from 'react'
 import {StyleSheet,View,FlatList,Text,TouchableOpacity} from 'react-native'
+import { THEME } from '../../utils/Theme';
 
-export const ToDoList = ({list,removeToDo})=>{
+export const ToDoList = ({list,removeToDo,onOpen})=>{
     return (
         <View style={style.wrap}>
             <FlatList
                 data={list}
                 renderItem={({item})=>(
-                    <TouchableOpacity onLongPress={()=>removeToDo(item.id)}>
+                    <TouchableOpacity onLongPress={()=>removeToDo(item.id)} onPress={()=>onOpen(item.id)}>
                         <Text style={style.item}>{item.title}</Text>
                     </TouchableOpacity>                    
                 )}
@@ -26,7 +27,7 @@ const style = StyleSheet.create({
         padding:10,
         borderWidth:1,
         borderStyle:'solid',
-        borderColor:'blue',
+        borderColor:THEME.MAIN_COLOR,
         marginBottom:5,
         borderRadius:10
     }
