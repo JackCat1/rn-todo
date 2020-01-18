@@ -1,11 +1,22 @@
 import React,{useState} from 'react';
-import { StyleSheet, Text, View,ScrollView } from 'react-native';
+import { StyleSheet,View,Alert } from 'react-native';
+import * as Font from 'expo-font'
+import {AppLoading} from 'expo'
 
 import {Navbar} from './src/components/navbar/Navbar'
 import {MainScreen} from './src/screens/MainScreen'
 import { ToDoScreen } from './src/screens/ToDoScreen';
 
+
+async function loadApp(){
+  await Font.loadAsync({
+    'roboto-reg':require('./assets/fonts/Roboto-Regular.ttf'),
+    'roboto-bold':require('./assets/fonts/Roboto-Bold.ttf')
+  })
+}
+
 export default function App() {
+  const [isReady,setIsReady]=useState(false)
   const [toDoId,setToDoId]=useState(null)
   const [list,setState] = useState([
     {
@@ -18,6 +29,9 @@ export default function App() {
     }
   ])
   
+  if(!isReady){
+    return <AppLoading startAsync={loadApp} onError={err=>console.log(err)} onFinish={()=>setIsReady(true)}/>
+  }
   
   const addToDo = title=>{
     setState(prev=>[...prev,{
@@ -26,14 +40,41 @@ export default function App() {
     }])
   }
   const removeToDo = id=>{
-    setState(prev => prev.filter(item=>item.id!==id))
+    const elem = list.find(i=>i.id===id)
+    Alert.alert(
+      'Удаление элемента',
+      `Вы уверены, что хотите удалить "${elem.title}"?`,
+      [
+        {
+          text: 'Отмена',          
+          style: 'cancel',
+        },
+        {text: 'Удалить', 
+         style: 'destructive',
+          onPress: () => {
+            setToDoId(null)
+            setState(prev => prev.filter(item=>item.id!==id))
+          }
+        },
+      ],
+      {cancelable: false},
+    );
+    
+  }
+  const updateToDo = (id,title)=>{
+    setState(old=>old.map(item=>{
+      if(item.id===id){
+        item.title=title
+      }
+      return item
+    }))
   }
 
   let content = <MainScreen list={list} addToDo={addToDo} removeToDo={removeToDo} onOpen={setToDoId}/>
 
   if(toDoId){
     const toDoTitle = list.find(item=>item.id===toDoId)
-    content = <ToDoScreen goBack={()=>setToDoId(null)} toDoName={toDoTitle.title}/>
+    content = <ToDoScreen goBack={()=>setToDoId(null)} toDoName={toDoTitle} onRemove={removeToDo} onSave={updateToDo}/>
   }
 
 

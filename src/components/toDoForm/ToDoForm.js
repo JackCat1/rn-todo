@@ -1,12 +1,18 @@
 import React,{useState} from 'react'
-import {StyleSheet,View,TextInput,Button} from 'react-native'
+import {StyleSheet,View,TextInput,Alert,Keyboard} from 'react-native'
 import { THEME } from '../../utils/Theme';
+import { AppButton } from '../ui/AppButton';
 
 export const ToDoForm = ({addToDo})=>{
     const [value,onChangeText]=useState('')
     const sendToDo = (title)=>{
-        addToDo(title)
-        onChangeText('')
+        if(title){
+            addToDo(title)
+            onChangeText('')
+            Keyboard.dismiss()
+        }else{
+           Alert.alert('Ошибка','Название не должно быть пустым') 
+        }        
     }
     return (
         <View style={style.wrap}>
@@ -15,7 +21,10 @@ export const ToDoForm = ({addToDo})=>{
                 onChangeText={onChangeText}
                 value={value}
             />
-            <Button title="Добавить" onPress={()=>sendToDo(value)}/>
+            <AppButton onPress={()=>sendToDo(value)}>
+                Добавить
+            </AppButton>
+            
         </View>
     )
 }

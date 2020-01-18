@@ -29,6 +29,7 @@ const style = StyleSheet.create({
         borderStyle:'solid',
         borderColor:THEME.MAIN_COLOR,
         marginBottom:5,
-        borderRadius:10
+        borderRadius:10,
+        fontFamily:'roboto-bold'
     }
 })
