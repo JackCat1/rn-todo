@@ -1,13 +1,17 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import {StyleSheet,View} from 'react-native'
 import {ToDoForm} from '../components/toDoForm/ToDoForm'
 import {ToDoList} from '../components/toDoList/ToDoList'
+import { ToDoContext } from '../context/todo/todoContext';
+import { ScreenContext } from '../context/screen/screenContext';
 
-export const MainScreen = ({list,addToDo,removeToDo,onOpen})=>{
+export const MainScreen = ()=>{
+    const {todos,addToDo,removeToDo}=useContext(ToDoContext)
+    const {changeScreen} = useContext(ScreenContext)
     return (
         <View style={style.wrap}>
             <ToDoForm addToDo={addToDo}/>        
-            <ToDoList list={list} removeToDo={removeToDo} onOpen={onOpen}/>
+            <ToDoList list={todos} removeToDo={removeToDo} onOpen={changeScreen}/>
         </View>
     )
 }

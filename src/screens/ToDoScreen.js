@@ -1,13 +1,18 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {StyleSheet,View,Text} from 'react-native'
 import {AntDesign,FontAwesome} from '@expo/vector-icons'
 import { THEME } from '../utils/Theme';
 import {AppCard} from '../components/ui/AppCard'
 import { EditModal } from '../components/EditModal';
 import { AppButton } from '../components/ui/AppButton';
+import { ToDoContext } from '../context/todo/todoContext';
+import { ScreenContext } from '../context/screen/screenContext';
 
 export const ToDoScreen = ({goBack,toDoName,onRemove,onSave})=>{
     const [modal,togleModal]=useState(false)
+    const {todos,removeToDo}=useContext(ToDoContext)    
+    const {todoId,changeScreen}=useContext(ScreenContext)
+    const toDoName = todos.find(t = t.id===todoId)
     const saveHandler = title=>{
         togleModal(false)
         onSave(toDoName.id,title)

@@ -7,6 +7,7 @@ import {AppLoading} from 'expo'
 
 import { MainLayout } from './src/components/MainLayout';
 import {ToDoState} from './src/context/todo/ToDoState';
+import { ScreenState } from './src/context/screen/ScreenState';
 
 
 async function loadApp(){
@@ -28,9 +29,12 @@ export default function App() {
 
 
   return (
-    <ToDoState>
-      <MainLayout/>
-    </ToDoState>
+    <ScreenState>
+      <ToDoState>
+        <MainLayout/>
+      </ToDoState>
+    </ScreenState>
+    
   )
 }
 

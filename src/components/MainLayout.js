@@ -5,26 +5,11 @@ import {Navbar} from './navbar/Navbar'
 import {MainScreen} from '../screens/MainScreen'
 import { ToDoScreen } from '../screens/ToDoScreen';
 import { ToDoContext } from '../context/todo/todoContext';
+import {ScreenContext} from '../context/screen/screenContext';
 
-export const MainLayout = ()=>{
-    const {todos,addToDo,removeToDo,updateToDo} = useContext(ToDoContext)
-    const [toDoId,setToDoId]=useState(null)
-    // const [list,setState] = useState([
-    //   {
-    //     id:'1',
-    //     title:'First'
-    //   },
-    //   {
-    //     id:'2',
-    //     title:'Seconnd'
-    //   }
-    // ])
-    // const addToDo = title=>{
-    //     setState(prev=>[...prev,{
-    //       id:Date.now().toString(),
-    //       title
-    //     }])
-    //   }
+export const MainLayout = ()=>{    
+    const {todoId} = useContext(ScreenContext)
+    
     //   const removeToDo = id=>{
     //     const elem = list.find(i=>i.id===id)
     //     Alert.alert(
@@ -46,27 +31,13 @@ export const MainLayout = ()=>{
     //       {cancelable: false},
     //     );
         
-    //   }
-    //   const updateToDo = (id,title)=>{
-    //     setState(old=>old.map(item=>{
-    //       if(item.id===id){
-    //         item.title=title
-    //       }
-    //       return item
-    //     }))
-    //   }
-    
-      let content = <MainScreen list={todos} addToDo={addToDo} removeToDo={removeToDo} onOpen={setToDoId}/>
-    
-      if(toDoId){
-        const toDoTitle = todos.find(item=>item.id===toDoId)
-        content = <ToDoScreen goBack={()=>setToDoId(null)} toDoName={toDoTitle} onRemove={removeToDo} onSave={updateToDo}/>
-      }
+    //   }    
+     
     return (
         <View>
             <Navbar/>
             <View style={style.content}>
-                {content}                          
+                {todoId?<ToDoScreen/>:<MainScreen/>}                          
             </View>      
         </View>
     )
