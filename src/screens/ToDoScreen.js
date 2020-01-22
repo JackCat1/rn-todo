@@ -8,14 +8,14 @@ import { AppButton } from '../components/ui/AppButton';
 import { ToDoContext } from '../context/todo/todoContext';
 import { ScreenContext } from '../context/screen/screenContext';
 
-export const ToDoScreen = ({goBack,toDoName,onRemove,onSave})=>{
+export const ToDoScreen = ()=>{
     const [modal,togleModal]=useState(false)
-    const {todos,removeToDo}=useContext(ToDoContext)    
+    const {todos,removeToDo,updateToDo}=useContext(ToDoContext)    
     const {todoId,changeScreen}=useContext(ScreenContext)
-    const toDoName = todos.find(t = t.id===todoId)
+    const toDoName = todos.find(t => t.id===todoId)
     const saveHandler = title=>{
         togleModal(false)
-        onSave(toDoName.id,title)
+        updateToDo(toDoName.id,title)
     }
     return (
         <View style={style.wrap}>
@@ -29,12 +29,12 @@ export const ToDoScreen = ({goBack,toDoName,onRemove,onSave})=>{
             
             <View style={style.buttons}> 
                 <View style={style.button}>
-                    <AppButton onPress={goBack} color={THEME.SUCCESS_COLOR}>
+                    <AppButton onPress={()=>changeScreen(null)} color={THEME.SUCCESS_COLOR}>
                         <AntDesign name='back' size={20}/>
                     </AppButton>                   
                 </View>
                 <View style={style.button}>
-                    <AppButton onPress={()=>onRemove(toDoName.id)} color={THEME.WARNING_COLOR}>
+                    <AppButton onPress={()=>removeToDo(toDoName.id)} color={THEME.WARNING_COLOR}>
                         <FontAwesome name='remove' size={20}/>
                     </AppButton>                    
                 </View>
