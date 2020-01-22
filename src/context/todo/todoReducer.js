@@ -8,7 +8,7 @@ export const todoReducer = (state,action)=>{
                 todos:[
                     ...state.todos,
                     {
-                        id:Date.now().toString(),
+                        id:action.id,
                         title: action.title
                     }
                 ]

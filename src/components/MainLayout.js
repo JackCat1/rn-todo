@@ -10,31 +10,8 @@ import {ScreenContext} from '../context/screen/screenContext';
 export const MainLayout = ()=>{    
     const {todoId} = useContext(ScreenContext)
     
-    //   const removeToDo = id=>{
-    //     const elem = list.find(i=>i.id===id)
-    //     Alert.alert(
-    //       'Удаление элемента',
-    //       `Вы уверены, что хотите удалить "${elem.title}"?`,
-    //       [
-    //         {
-    //           text: 'Отмена',          
-    //           style: 'cancel',
-    //         },
-    //         {text: 'Удалить', 
-    //          style: 'destructive',
-    //           onPress: () => {
-    //             setToDoId(null)
-    //             setState(prev => prev.filter(item=>item.id!==id))
-    //           }
-    //         },
-    //       ],
-    //       {cancelable: false},
-    //     );
-        
-    //   }    
-     
     return (
-        <View>
+        <View style={style.wrapper}>
             <Navbar/>
             <View style={style.content}>
                 {todoId?<ToDoScreen/>:<MainScreen/>}                          
@@ -46,6 +23,10 @@ export const MainLayout = ()=>{
 const style = StyleSheet.create({
     content:{
         paddingHorizontal:10,
-        paddingVertical:10
+        paddingVertical:10,
+        flex:1
+    },
+    wrapper:{
+        flex:1
     }
 })
